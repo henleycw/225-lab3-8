@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Store environment variables used throughout the pipeline
         DOCKER_CREDENTIALS_ID = 'henleycw-dockerhub'        // Jenkins credential ID for authenticating with Docker Hub
-        GITHUB_URL = 'https://github.com/henleycw-cit/225-lab3-8.git'  // GitHub repository containing Kubernetes YAML files
+        GITHUB_URL = 'https://github.com/henleycw/225-lab3-8.git'  // GitHub repository containing Kubernetes YAML files
         KUBECONFIG = credentials('henleycw-225')             // Jenkins stored credential for accessing your Kubernetes cluster
     }
 
@@ -14,18 +14,16 @@ pipeline {
         // Stage 1: Checkout Code
         // -------------------------
         stage('Checkout') {
-            steps {
-                // Pull the latest version of the repository from GitHub (main branch)
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        url: "${GITHUB_URL}",
-                        credentialsId: 'roseaw-dockerhub'
-                    ]]
-                ])
-            }
-        }
+    steps {
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: '*/main']],
+            userRemoteConfigs: [[
+                url: "${GITHUB_URL}"
+            ]]
+        ])
+    }
+}
         // ---------------------------------------
         // Stage 2: Deploy MongoDB and Mongo Express
         // ---------------------------------------
